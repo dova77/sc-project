@@ -1,54 +1,48 @@
 /*
-	Verti by HTML5 UP
+	Minimaxing by HTML5 UP
 	html5up.net | @n33co
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
 (function($) {
 
-	skel.breakpoints({
-		xlarge: '(max-width: 1680px)',
-		large: '(max-width: 1280px)',
-		medium: '(max-width: 980px)',
-		small: '(max-width: 736px)'
-	});
+	skel
+		.breakpoints({
+			desktop: '(min-width: 737px)',
+			tablet: '(min-width: 737px) and (max-width: 1200px)',
+			mobile: '(max-width: 736px)'
+		})
+		.viewport({
+			breakpoints: {
+				tablet: {
+					width: 1080
+				}
+			}
+		});
 
 	$(function() {
 
-		var	$window = $(window),
+		var $window = $(window),
 			$body = $('body');
-
-		// Disable animations/transitions until the page has loaded.
-			$body.addClass('is-loading');
-
-			$window.on('load', function() {
-				$body.removeClass('is-loading');
-			});
 
 		// Fix: Placeholder polyfill.
 			$('form').placeholder();
 
-		// Prioritize "important" elements on medium.
-			skel.on('+medium -medium', function() {
+		// Prioritize "important" elements on mobile.
+			skel.on('+mobile -mobile', function() {
 				$.prioritize(
-					'.important\\28 medium\\29',
-					skel.breakpoint('medium').active
+					'.important\\28 mobile\\29',
+					skel.breakpoint('mobile').active
 				);
-			});
-
-		// Dropdowns.
-			$('#nav > ul').dropotron({
-				mode: 'fade',
-				noOpenerFade: true,
-				speed: 300
 			});
 
 		// Off-Canvas Navigation.
 
-			// Navigation Toggle.
+			// Title Bar.
 				$(
-					'<div id="navToggle">' +
+					'<div id="titleBar">' +
 						'<a href="#navPanel" class="toggle"></a>' +
+						'<span class="title">' + $('#logo').html() + '</span>' +
 					'</div>'
 				)
 					.appendTo($body);
@@ -75,7 +69,7 @@
 
 			// Fix: Remove navPanel transitions on WP<10 (poor/buggy performance).
 				if (skel.vars.os == 'wp' && skel.vars.osVersion < 10)
-					$('#navToggle, #navPanel, #page-wrapper')
+					$('#titleBar, #navPanel, #page-wrapper')
 						.css('transition', 'none');
 
 	});
